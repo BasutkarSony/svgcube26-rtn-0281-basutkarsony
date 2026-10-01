@@ -12,29 +12,7 @@
 
 ---
 
-## My Implementation
-
-### Solution
-A FastAPI-based Returns Manager that converts return images into structured, traceable evidence. The agent uses a vision-provider abstraction, currently backed by Gemini, and keeps uncertain cases in human review.
-
-### Implemented
-- Tenant-isolated SQLite persistence
-- Multimodal image analysis in one provider request
-- Identity and completeness evidence
-- Observable physical-state evidence
-- Image-quality checks
-- Evidence references tied to image indices
-- Fail-open handling with UNCERTAIN and review routing
-- Structured Pydantic evidence contract
-
-### Engineering Decisions
-- Provider abstraction keeps the vision model replaceable.
-- Evidence is required for confident automated verdicts.
-- Invalid, contradictory, low-confidence, or poor-quality evidence becomes UNCERTAIN.
-- Condition/disposition are not guessed by the vision model; operational decisions can remain with human review.
-
-### Testing
-The project includes automated tests covering tenancy, provider behavior, evidence validation, uncertainty handling, image quality, and failure paths.\n\n## Your problem statement: Returns Manager
+## Your problem statement: Returns Manager
 
 |                              |                                       |
 | ---------------------------- | ------------------------------------- |
