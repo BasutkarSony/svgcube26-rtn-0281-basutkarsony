@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 import json
+import mimetypes
+from pathlib import Path
 from typing import Sequence
 
 from src.agent.vision_provider import VisionAnalysis, VisionProvider, VisionProviderError
@@ -40,9 +42,21 @@ class GeminiVisionProvider(VisionProvider):
         prompt = self._build_prompt(image_refs, ordered_sku, ordered_asin, expected_parts)
         try:
             from google.genai import types
+            contents = [prompt]
+            for ref in image_refs:
+                path = Path(ref)
+                if path.is_file():
+                    mime_type = mimetypes.guess_type(path.name)[0] or "image/jpeg"
+                    contents.append(
+                        types.Part.from_bytes(
+                            data=path.read_bytes(),
+                            mime_type=mime_type,
+                        )
+                    )
+
             response = self._get_client().models.generate_content(
                 model=self.model,
-                contents=prompt,
+                contents=contents,
                 config=types.GenerateContentConfig(
                     system_instruction=SYSTEM_PROMPT,
                     response_mime_type="application/json",
