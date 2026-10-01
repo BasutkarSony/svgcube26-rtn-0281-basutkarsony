@@ -4,11 +4,13 @@
 
 The Returns Manager processes customer-return evidence and produces a structured, traceable evidence record.
 
-The workflow evaluates:
+The current implementation extracts evidence for:
 - Identity — whether the returned item matches the ordered SKU/ASIN.
 - Completeness — whether expected parts are present.
-- Condition — observable physical state supported by evidence.
-- Disposition — the next operational action.
+- Observable physical state — visual evidence such as signs of use or damage.
+- Image quality — whether supplied images are usable for evidence.
+
+The vision layer does not assign an Amazon condition grade or automatically choose disposition. Ambiguous cases are moved to review instead of being forced into PASS or FAIL.
 
 Ambiguous cases are moved to review instead of being forced into PASS or FAIL.
 
